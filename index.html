@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Onboarding Cliente | BE MARKETING GROUP</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f5f6;
+        --panel: #ffffff;
+        --ink: #151719;
+        --muted: #65717d;
+        --line: #dfe4ea;
+        --accent: #050505;
+        --accent-soft: #f0f1f2;
+        --focus: #9ca3af;
+        --danger: #b54747;
+        --shadow: 0 18px 50px rgba(20, 32, 40, 0.08);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      main {
+        width: min(980px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 40px 0 56px;
+      }
+
+      header {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 18px;
+        border-radius: 8px;
+        background: #050505;
+        color: #fff;
+        padding: 28px;
+        overflow: hidden;
+      }
+
+      .brand-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand-logo {
+        display: block;
+        width: 168px;
+        max-width: 60%;
+        height: auto;
+      }
+
+      .brand-name {
+        color: #d5d9de;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        color: #d5d9de;
+        font-size: 13px;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        color: #fff;
+        font-size: 58px;
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .intro {
+        max-width: 650px;
+        margin: 0;
+        color: #d5d9de;
+        font-size: 17px;
+        line-height: 1.55;
+      }
+
+      form {
+        display: grid;
+        gap: 16px;
+      }
+
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 8px 0 20px;
+      }
+
+      .step-pill {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        appearance: none;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--muted);
+        padding: 7px 12px;
+        font-size: 13px;
+        font-weight: 800;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .step-pill.is-active {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+        color: #111;
+      }
+
+      .step-pill:focus-visible {
+        outline: 3px solid rgba(5, 5, 5, 0.16);
+        outline-offset: 2px;
+      }
+
+      .step-panel {
+        display: none;
+        gap: 16px;
+      }
+
+      .step-panel.is-active {
+        display: grid;
+      }
+
+      section,
+      .summary-panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+
+      section {
+        display: grid;
+        gap: 18px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      fieldset {
+        min-width: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+      }
+
+      label,
+      legend {
+        color: #2c3339;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid #cfd7df;
+        border-radius: 7px;
+        padding: 11px 12px;
+        color: var(--ink);
+        background: #fff;
+        font: inherit;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 112px;
+        resize: vertical;
+        line-height: 1.45;
+      }
+
+      input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.12);
+      }
+
+      .hint {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .choice-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .choice {
+        position: relative;
+      }
+
+      .choice input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .choice span {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        border: 1px solid #cfd7df;
+        border-radius: 999px;
+        padding: 9px 14px;
+        background: #fff;
+        color: #2f3a42;
+        font-weight: 700;
+      }
+
+      .choice input:checked + span {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+        color: #111;
+      }
+
+      .upload-box {
+        display: grid;
+        gap: 10px;
+        min-height: 150px;
+        place-items: center;
+        border: 1.5px dashed #b8c5cf;
+        border-radius: 8px;
+        background: #fbfcfd;
+        padding: 24px;
+        text-align: center;
+      }
+
+      .upload-title {
+        margin: 0;
+        color: #20282f;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .upload-copy {
+        max-width: 540px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .upload-button {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        background: var(--accent);
+        color: #fff;
+        padding: 9px 14px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .file-list {
+        display: none;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .file-list.is-visible {
+        display: block;
+      }
+
+      .file-list li {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        padding: 10px 12px;
+        color: #26313a;
+        font-size: 14px;
+      }
+
+      .file-list li + li {
+        border-top: 1px solid var(--line);
+      }
+
+      .file-size {
+        flex: 0 0 auto;
+        color: var(--muted);
+      }
+
+      .secure-note {
+        border-left: 3px solid var(--accent);
+        background: #f7f8f9;
+        border-radius: 7px;
+        padding: 10px 12px;
+        color: #3d464d;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+        padding-top: 4px;
+      }
+
+      button {
+        min-height: 46px;
+        border: 0;
+        border-radius: 7px;
+        padding: 11px 16px;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .secondary {
+        background: #e9edf1;
+        color: #1d242a;
+      }
+
+      .is-hidden {
+        display: none;
+      }
+
+      .summary-panel {
+        display: none;
+        margin-top: 16px;
+      }
+
+      .summary-panel.is-visible {
+        display: grid;
+        gap: 14px;
+      }
+
+      pre {
+        overflow: auto;
+        white-space: pre-wrap;
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #f9fafb;
+        padding: 14px;
+        color: #27313a;
+        font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .status {
+        min-height: 20px;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .submit-status {
+        flex: 1 1 260px;
+        min-height: 20px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .submit-status.is-success {
+        color: #126142;
+      }
+
+      .submit-status.is-error {
+        color: var(--danger);
+      }
+
+      .required-note {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .required-note strong {
+        color: var(--danger);
+      }
+
+      @media (max-width: 720px) {
+        main {
+          width: min(100% - 22px, 980px);
+          padding-top: 24px;
+        }
+
+        header {
+          padding: 22px;
+        }
+
+        .brand-logo {
+          width: 142px;
+          max-width: 72%;
+        }
+
+        section,
+        .summary-panel {
+          padding: 18px;
+        }
+
+        h1 {
+          font-size: 36px;
+          line-height: 1.03;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          justify-content: stretch;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="brand-row">
+          <img class="brand-logo" src="assets/be-marketing-group-logo.png" alt="BE MARKETING GROUP">
+          <div class="brand-name">BE MARKETING GROUP</div>
+        </div>
+        <div class="eyebrow">Onboarding cliente</div>
+        <h1>Partiamo dalle informazioni essenziali.</h1>
+        <p class="intro">Compila questi campi per permettere al team BE MARKETING GROUP di configurare contatti, canali social, materiali del brand e dati di fatturazione senza rallentamenti.</p>
+      </header>
+
+      <div class="steps" aria-label="Step onboarding">
+        <button class="step-pill is-active" type="button" data-step-pill="1">1. Onboarding</button>
+        <button class="step-pill" type="button" data-step-pill="2">2. Fatturazione</button>
+      </div>
+
+      <form id="onboardingForm">
+        <div class="step-panel is-active" data-step-panel="1">
+          <section>
+            <h2>Dati principali</h2>
+            <div class="grid">
+              <div class="field">
+                <label for="brand">Nome azienda / brand <span aria-hidden="true">*</span></label>
+                <input id="brand" name="Nome azienda / brand" autocomplete="organization" required>
+              </div>
+              <div class="field">
+                <label for="referente">Nome referente <span aria-hidden="true">*</span></label>
+                <input id="referente" name="Nome referente" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="email">Email <span aria-hidden="true">*</span></label>
+                <input id="email" name="Email" type="email" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="telefono">Numero di telefono <span aria-hidden="true">*</span></label>
+                <input id="telefono" name="Numero di telefono" type="tel" autocomplete="tel" required>
+              </div>
+              <fieldset class="field full">
+                <legend>Canale preferito per comunicare</legend>
+                <div class="choice-row">
+                  <label class="choice">
+                    <input type="radio" name="Canale preferito" value="WhatsApp" checked>
+                    <span>WhatsApp</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="Canale preferito" value="Email">
+                    <span>Email</span>
+                  </label>
+                </div>
+              </fieldset>
+              <div class="field full">
+                <label for="obiettivo">Obiettivo principale</label>
+                <textarea id="obiettivo" name="Obiettivo principale" placeholder="Esempio: aumentare clienti, migliorare immagine, far crescere Instagram/TikTok, promuovere un servizio o prodotto."></textarea>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>Account social</h2>
+            <div class="grid">
+              <div class="field">
+                <label for="instagram">Profilo Instagram</label>
+                <input id="instagram" name="Profilo Instagram" autocomplete="username" placeholder="@nomeprofilo o link">
+              </div>
+              <div class="field">
+                <label for="instagramPassword">Password Instagram</label>
+                <input id="instagramPassword" name="Password Instagram" type="password" autocomplete="current-password" placeholder="Inserisci la password">
+                <div class="secure-note">La password viene oscurata mentre la inserisci e non compare nel riepilogo copiabile. Verrà gestita con riservatezza dal team BE MARKETING GROUP.</div>
+              </div>
+              <div class="field">
+                <label for="tiktok">Profilo TikTok</label>
+                <input id="tiktok" name="Profilo TikTok" autocomplete="username" placeholder="@nomeprofilo o link">
+              </div>
+              <div class="field">
+                <label for="tiktokPassword">Password TikTok</label>
+                <input id="tiktokPassword" name="Password TikTok" type="password" autocomplete="current-password" placeholder="Inserisci la password">
+                <div class="secure-note">La password viene oscurata mentre la inserisci e non compare nel riepilogo copiabile. Verrà gestita con riservatezza dal team BE MARKETING GROUP.</div>
+              </div>
+            </div>
+            <p class="hint">Se preferisci, puoi comunque condividere gli accessi tramite password manager o aggiunta come collaboratore/admin.</p>
+          </section>
+
+          <section>
+            <h2>Materiali e note</h2>
+            <div class="grid">
+              <div class="field full">
+                <label for="materiali">Materiali disponibili / branding</label>
+                <textarea id="materiali" name="Materiali disponibili / branding" placeholder="Logo, font, colori, brand guidelines, foto, video, grafiche, sito web, link Drive/Dropbox, ecc."></textarea>
+              </div>
+              <div class="field full">
+                <label for="fileUpload">Caricamento file</label>
+                <div class="upload-box">
+                  <p class="upload-title">Carica logo, foto, video, grafiche o documenti brand.</p>
+                  <p class="upload-copy">Puoi selezionare piu file insieme. In questa versione il riepilogo mostra i nomi dei file caricati.</p>
+                  <label class="upload-button" for="fileUpload">Scegli file</label>
+                  <input id="fileUpload" name="File caricati" type="file" multiple>
+                </div>
+                <ul class="file-list" id="fileList" aria-live="polite"></ul>
+              </div>
+              <div class="field full">
+                <label for="note">Note importanti o cose da evitare</label>
+                <textarea id="note" name="Note importanti o cose da evitare" placeholder="Indicazioni, preferenze, contenuti da evitare, parole da non usare, vincoli o attenzioni particolari."></textarea>
+              </div>
+            </div>
+            <div class="required-note"><strong>*</strong> Campi obbligatori</div>
+          </section>
+        </div>
+
+        <div class="step-panel" data-step-panel="2">
+          <section>
+            <h2>Informazioni di fatturazione</h2>
+            <div class="grid">
+              <div class="field">
+                <label for="ragioneSociale">Ragione sociale <span aria-hidden="true">*</span></label>
+                <input id="ragioneSociale" name="Ragione sociale" autocomplete="organization" required>
+              </div>
+              <div class="field">
+                <label for="piva">Partita IVA / Codice fiscale <span aria-hidden="true">*</span></label>
+                <input id="piva" name="Partita IVA / Codice fiscale" required>
+              </div>
+              <div class="field full">
+                <label for="indirizzo">Indirizzo di fatturazione <span aria-hidden="true">*</span></label>
+                <input id="indirizzo" name="Indirizzo di fatturazione" autocomplete="street-address" required>
+              </div>
+              <div class="field">
+                <label for="citta">Citta <span aria-hidden="true">*</span></label>
+                <input id="citta" name="Citta" autocomplete="address-level2" required>
+              </div>
+              <div class="field">
+                <label for="cap">CAP <span aria-hidden="true">*</span></label>
+                <input id="cap" name="CAP" autocomplete="postal-code" inputmode="numeric" required>
+              </div>
+              <div class="field">
+                <label for="provincia">Provincia <span aria-hidden="true">*</span></label>
+                <input id="provincia" name="Provincia" maxlength="2" placeholder="MI" required>
+              </div>
+              <div class="field">
+                <label for="paese">Paese</label>
+                <input id="paese" name="Paese" value="Italia" autocomplete="country-name">
+              </div>
+              <div class="field">
+                <label for="pec">PEC</label>
+                <input id="pec" name="PEC" type="email" placeholder="nome@pec.it">
+              </div>
+              <div class="field">
+                <label for="sdi">Codice SDI</label>
+                <input id="sdi" name="Codice SDI" maxlength="7" placeholder="0000000">
+              </div>
+            </div>
+            <p class="hint">Compila almeno PEC o Codice SDI se li hai disponibili.</p>
+            <div class="required-note"><strong>*</strong> Campi obbligatori</div>
+          </section>
+        </div>
+
+        <div class="actions">
+          <span class="submit-status" id="submitStatus" aria-live="polite"></span>
+          <button class="secondary" type="reset">Svuota</button>
+          <button class="secondary is-hidden" type="button" id="backButton">Indietro</button>
+          <button class="primary" type="button" id="nextButton">Avanti</button>
+          <button class="primary is-hidden" type="submit" id="submitButton">Invia onboarding</button>
+        </div>
+      </form>
+
+      <div class="summary-panel" id="summaryPanel" aria-live="polite">
+        <h2>Riepilogo compilazione</h2>
+        <pre id="summaryText"></pre>
+        <div class="actions">
+          <span class="status" id="copyStatus"></span>
+          <button class="secondary" type="button" id="copyButton">Copia riepilogo</button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydeg1jznZUbHq9xRbSKHKq3UVp3CFIoOTGlHdp-_deZpeXaIB_fDYCVnO5d2Uc7CAy/exec";
+      const form = document.querySelector("#onboardingForm");
+      const summaryPanel = document.querySelector("#summaryPanel");
+      const summaryText = document.querySelector("#summaryText");
+      const copyButton = document.querySelector("#copyButton");
+      const copyStatus = document.querySelector("#copyStatus");
+      const submitStatus = document.querySelector("#submitStatus");
+      const fileUpload = document.querySelector("#fileUpload");
+      const fileList = document.querySelector("#fileList");
+      const backButton = document.querySelector("#backButton");
+      const nextButton = document.querySelector("#nextButton");
+      const submitButton = document.querySelector("#submitButton");
+      const stepPanels = document.querySelectorAll("[data-step-panel]");
+      const stepPills = document.querySelectorAll("[data-step-pill]");
+      let currentStep = 1;
+
+      function updateStep(step) {
+        currentStep = step;
+
+        for (const panel of stepPanels) {
+          panel.classList.toggle("is-active", panel.dataset.stepPanel === String(step));
+        }
+
+        for (const pill of stepPills) {
+          pill.classList.toggle("is-active", pill.dataset.stepPill === String(step));
+        }
+
+        backButton.classList.toggle("is-hidden", step === 1);
+        nextButton.classList.toggle("is-hidden", step === 2);
+        submitButton.classList.toggle("is-hidden", step === 1);
+        summaryPanel.classList.remove("is-visible");
+        copyStatus.textContent = "";
+        submitStatus.textContent = "";
+        submitStatus.className = "submit-status";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function validateCurrentStep() {
+        const activePanel = document.querySelector(`[data-step-panel="${currentStep}"]`);
+        const requiredFields = activePanel.querySelectorAll("[required]");
+
+        for (const field of requiredFields) {
+          if (!field.checkValidity()) {
+            field.reportValidity();
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      function validateAllSteps() {
+        const requiredFields = form.querySelectorAll("[required]");
+
+        for (const field of requiredFields) {
+          if (!field.checkValidity()) {
+            const panel = field.closest("[data-step-panel]");
+            updateStep(Number(panel.dataset.stepPanel));
+            field.reportValidity();
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes < 1024) {
+          return `${bytes} B`;
+        }
+
+        if (bytes < 1024 * 1024) {
+          return `${(bytes / 1024).toFixed(1)} KB`;
+        }
+
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+      }
+
+      function selectedFileLines() {
+        return Array.from(fileUpload.files).map((file) => `${file.name} (${formatFileSize(file.size)})`);
+      }
+
+      function renderFileList() {
+        const files = selectedFileLines();
+        fileList.innerHTML = "";
+        fileList.classList.toggle("is-visible", files.length > 0);
+
+        for (const fileLine of files) {
+          const item = document.createElement("li");
+          const separatorIndex = fileLine.lastIndexOf(" (");
+          const name = document.createElement("span");
+          const size = document.createElement("span");
+
+          name.textContent = fileLine.slice(0, separatorIndex);
+          size.textContent = fileLine.slice(separatorIndex + 1, -1);
+          size.className = "file-size";
+          item.append(name, size);
+          fileList.append(item);
+        }
+      }
+
+      function buildSummary() {
+        const data = new FormData(form);
+        const lines = ["ONBOARDING CLIENTE - BE MARKETING GROUP", ""];
+
+        for (const [label, value] of data.entries()) {
+          if (value instanceof File) {
+            continue;
+          }
+
+          const cleanValue = value.trim();
+          if (cleanValue) {
+            if (label.includes("Password")) {
+              lines.push(`${label}: inserita, non mostrata nel riepilogo`);
+              continue;
+            }
+
+            lines.push(`${label}: ${cleanValue}`);
+          }
+        }
+
+        const files = selectedFileLines();
+        if (files.length) {
+          lines.push(`File caricati: ${files.join(", ")}`);
+        }
+
+        return lines.join("\n");
+      }
+
+      function buildPayload() {
+        const data = new FormData(form);
+        const payload = {
+          submittedAt: new Date().toISOString(),
+          source: "BE MARKETING GROUP onboarding",
+          files: selectedFileLines().join(", ")
+        };
+
+        for (const [label, value] of data.entries()) {
+          if (value instanceof File) {
+            continue;
+          }
+
+          payload[label] = value.trim();
+        }
+
+        return payload;
+      }
+
+      async function sendToGoogleSheet() {
+        if (!GOOGLE_SCRIPT_URL) {
+          throw new Error("Configura GOOGLE_SCRIPT_URL con l'URL del Web App di Google Apps Script.");
+        }
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(buildPayload())
+        });
+
+        return response;
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!validateAllSteps()) {
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitStatus.textContent = "Invio in corso...";
+        submitStatus.className = "submit-status";
+
+        try {
+          await sendToGoogleSheet();
+          submitStatus.textContent = "Onboarding inviato correttamente.";
+          submitStatus.classList.add("is-success");
+        } catch (error) {
+          submitStatus.textContent = error.message;
+          submitStatus.classList.add("is-error");
+        } finally {
+          submitButton.disabled = false;
+        }
+
+        summaryText.textContent = buildSummary();
+        summaryPanel.classList.add("is-visible");
+        copyStatus.textContent = "";
+        summaryPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      form.addEventListener("reset", () => {
+        updateStep(1);
+        summaryPanel.classList.remove("is-visible");
+        summaryText.textContent = "";
+        copyStatus.textContent = "";
+        submitStatus.textContent = "";
+        submitStatus.className = "submit-status";
+        fileList.innerHTML = "";
+        fileList.classList.remove("is-visible");
+      });
+
+      nextButton.addEventListener("click", () => {
+        if (validateCurrentStep()) {
+          updateStep(2);
+        }
+      });
+
+      backButton.addEventListener("click", () => {
+        updateStep(1);
+      });
+
+      for (const pill of stepPills) {
+        pill.addEventListener("click", () => {
+          updateStep(Number(pill.dataset.stepPill));
+        });
+      }
+
+      fileUpload.addEventListener("change", renderFileList);
+
+      copyButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(summaryText.textContent);
+          copyStatus.textContent = "Riepilogo copiato.";
+        } catch {
+          copyStatus.textContent = "Seleziona il testo e copialo manualmente.";
+        }
+      });
+    </script>
+  </body>
+</html>
